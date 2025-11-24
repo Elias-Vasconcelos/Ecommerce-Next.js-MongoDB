@@ -1,4 +1,5 @@
-import { useSearchParams } from "next/navigation";
+"use client";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Footprints,
   Glasses,
@@ -55,13 +56,24 @@ const categories = [
 
 const Categories = () => {
   const SearchParams = useSearchParams();
-  const SelectedCatgory = SearchParams.get("categoris");
+  const SelectedCatgory = SearchParams.get("category");
+  const router = useRouter();
+  const pathname = usePathname();
+  const handleChange = (valeu: string | null) => {
+    const params = new URLSearchParams(SearchParams);
+    params.set("category", valeu || "all");
+    router.push(`${pathname}?category=${valeu}`, { scroll: false });
+  };
+
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-8 gap-2 bg-gray-100 p-2 rounded-lg mb:4 text-sm">
       {categories.map((category) => (
         <div
-          className="flex items-center justify-center gap-2 cursor-pointer px-2 py-1 rounded-md"
+          className={`flex items-center justify-center gap-2 cursor-pointer px-2 py-1 rounded-md ${
+            category.slug === SelectedCatgory ? "bg-white" : "text-gray-400"
+          }`}
           key={category.name}
+          onClick={() => handleChange(category.slug)}
         >
           {category.icon}
           {category.name}
