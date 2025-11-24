@@ -1,11 +1,12 @@
 import Link from "next/link";
 import SearchBar from "./SearchaBar";
 import { Bell, Home, ShoppingCart } from "lucide-react";
+import Image from "next/image";
 const Navbar = () => {
   return (
     <nav className="w-full flex items-center justify-between border-b border-gray-200 pb-4">
       <Link href="/" className="flex items-center ">
-        <img
+        <Image
           src="/logo.png"
           alt="Logo"
           width={36}

@@ -1,5 +1,15 @@
+import Image from "next/image";
+import ProductList from "./components/ProductList";
+
 const Homepage = () => {
-  return <div className="">Homepage</div>;
+  return (
+    <div>
+      <div className="relative aspect-[3/1] mb-12">
+        <Image src="/featured.png" alt="Featured Product" fill></Image>
+      </div>
+      <ProductList />
+    </div>
+  );
 };
 
 export default Homepage;
