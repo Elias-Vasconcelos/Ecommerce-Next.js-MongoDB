@@ -59,9 +59,10 @@ const Categories = () => {
   const SelectedCatgory = SearchParams.get("category");
   const router = useRouter();
   const pathname = usePathname();
+
   const handleChange = (valeu: string | null) => {
     const params = new URLSearchParams(SearchParams);
-    params.set("category", valeu || "all");
+    params.set("category", valeu || "All");
     router.push(`${pathname}?category=${valeu}`, { scroll: false });
   };
 
