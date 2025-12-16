@@ -2,6 +2,7 @@ import Link from "next/link";
 import SearchBar from "./SearchaBar";
 import { Bell, Home, ShoppingCart } from "lucide-react";
 import Image from "next/image";
+import ShoppingCartIcon from "./ShoppingCartIcon";
 const Navbar = () => {
   return (
     <nav className="w-full flex items-center justify-between border-b border-gray-200 pb-4">
@@ -28,7 +29,7 @@ const Navbar = () => {
           <Bell className="w-4 h-4 text-gray-600" />
         </Link>
         <Link href="/">
-          <ShoppingCart className="w-4 h-4 text-gray-600" />
+          <ShoppingCartIcon />
         </Link>
         <Link href="/">sing in</Link>
       </div>
