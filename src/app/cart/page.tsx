@@ -2,7 +2,11 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { CartItemsType } from "../components/Types";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Key, Trash2 } from "lucide-react";
+import ShippingForm from "../components/ShippingForm";
+import PaymentForm from "../components/PaymentForm";
+import { useState } from "react";
+import Image from "next/image";
 
 const steps = [
   {
@@ -79,6 +83,7 @@ const cartItems: CartItemsType = [
 export const CartPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const [shippingForm, setShippingForm] = useState(null);
 
   const activeStep = parseInt(searchParams.get("step") || "1");
 
@@ -117,10 +122,56 @@ export const CartPage = () => {
       <div className="w-full flex flex-col lg:flex-row gap-16">
         {/* STEPS */}
         <div className="w-full lg:w-7/12 shadow-lg border-1 border-gray-100 p-8 rounded-lg flex flex-col gap-8">
-          1
+          {activeStep === 1 ? (
+            cartItems.map((item) => (
+              // Cart item
+              <div key={item.id} className="flex items-center justify-between">
+                {/*Image and Details */}
+                <div className="flex gap-8">
+                  {/* Image */}
+                  <div className="relative w-32 h-32 bg-gray-50 rounded-lg overflow-hidden">
+                    <Image
+                      src={item.images[item.selectedColor]}
+                      alt={item.name}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  {/* Details */}
+                  <div className="flex flex-col justify-between">
+                    <div className="flex flex-col gap-1">
+                      <p className="text-sm font-medium "> {item.name}</p>
+                      <p className="text-xs text-gray-500">
+                        Quantity: {item.quantity}
+                      </p>
+                      <p className="text-xs text-gray-500 ">
+                        Size: {item.selectedSize}
+                      </p>
+                      <p className="text-xs text-gray-500 ">
+                        Color: {item.selectedColor}
+                      </p>
+                    </div>
+                    <p className="font-medium"> {item.price.toFixed(2)}</p>
+                  </div>
+                </div>
+                {/*Delete Button */}
+                <button className="w-8 h-8 rounded-full bg-red-100 hover:bg-red-200 transition-all duration-300 text-red-400  flex items-center justify-center cursor-pointer">
+                  <Trash2 className="w3 h-3" />
+                </button>
+              </div>
+            ))
+          ) : activeStep === 2 ? (
+            <ShippingForm />
+          ) : activeStep === 3 && shippingForm ? (
+            <PaymentForm />
+          ) : (
+            <p className="text-sm text-gray-500">
+              Please Fill in the shipping form to continue.
+            </p>
+          )}
         </div>
         {/* DETAILS */}
-        <div className="w-full lg:w-5/12 shadow-lg border-1 border-gray-100 p-8 rounded-lg flex flex-col gap-8">
+        <div className="w-full lg:w-5/12 shadow-lg border-1 border-gray-100 p-8 rounded-lg flex flex-col gap-8 h-max">
           <h2 className="font-semibold">Cart Details</h2>
           <div className="flex flex-col gap-4">
             {/* DETAILS 1 */}
