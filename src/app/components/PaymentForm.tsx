@@ -1,21 +1,22 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { ShippingFormInputs, shippingFormSchema } from "./Types";
+import { PaymentFormInputs, paymentFormSchema } from "./Types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowUpRight } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const PaymentForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ShippingFormInputs>({
-    resolver: zodResolver(shippingFormSchema),
+  } = useForm<PaymentFormInputs>({
+    resolver: zodResolver(paymentFormSchema),
   });
 
   const router = useRouter();
 
-  const handlePaymentForm: SubmitHandler<ShippingFormInputs> = (data) => {};
+  const handlePaymentForm: SubmitHandler<PaymentFormInputs> = (data) => {};
 
   return (
     <form
@@ -24,90 +25,109 @@ const PaymentForm = () => {
     >
       {/* 1* field */}
       <div className="flex flex-col gap-1">
-        <label htmlFor="name" className="text-xs text-gray-500 font-medium">
-          Name
+        <label
+          htmlFor="cardHolder"
+          className="text-xs text-gray-500 font-medium"
+        >
+          Name on Cart
         </label>
         <input
           className="border-b border-gray-200 py-2 outline-none text-sm"
           type="text"
-          id="name"
-          placeholder="John Doe"
-          {...register("name")}
+          id="cardHolder"
+          placeholder="0101"
+          {...register("cardHolder")}
         />
-        {errors.name && (
-          <p className="text-xs text-red-500">{errors.name.message}</p>
+        {errors.cardHolder && (
+          <p className="text-xs text-red-500">{errors.cardHolder.message}</p>
         )}
       </div>
       {/* 2* field */}
       <div className="flex flex-col gap-1">
-        <label htmlFor="E-mail" className="text-xs text-gray-500 font-medium">
-          E-mail
+        <label
+          htmlFor="cardNumber"
+          className="text-xs text-gray-500 font-medium"
+        >
+          Card number
         </label>
         <input
           className="border-b border-gray-200 py-2 outline-none text-sm"
-          type="email"
-          id="email"
-          placeholder="Elias@gmail.com"
-          {...register("email")}
+          type="text"
+          id="cardNumber"
+          placeholder="122235447897456"
+          {...register("cardNumber")}
         />
-        {errors.email && (
-          <p className="text-xs text-red-500">{errors.email.message}</p>
+        {errors.cardNumber && (
+          <p className="text-xs text-red-500">{errors.cardNumber.message}</p>
         )}
       </div>
       {/* 3* field */}
       <div className="flex flex-col gap-1">
-        <label htmlFor="name" className="text-xs text-gray-500 font-medium">
-          Phone
+        <label
+          htmlFor="expirationDate"
+          className="text-xs text-gray-500 font-medium"
+        >
+          Expiration Date
         </label>
         <input
           className="border-b border-gray-200 py-2 outline-none text-sm"
           type="text"
-          id="phone"
-          placeholder="11999999999"
-          {...register("phone")}
+          id="expirationDate"
+          placeholder="01/02"
+          {...register("expirationDate")}
         />
-        {errors.phone && (
-          <p className="text-xs text-red-500">{errors.phone.message}</p>
+        {errors.expirationDate && (
+          <p className="text-xs text-red-500">
+            {errors.expirationDate.message}
+          </p>
         )}
       </div>
       {/* 4* field */}
       <div className="flex flex-col gap-1">
-        <label htmlFor="name" className="text-xs text-gray-500 font-medium">
-          Address
+        <label htmlFor="cvv" className="text-xs text-gray-500 font-medium">
+          CVV
         </label>
         <input
           className="border-b border-gray-200 py-2 outline-none text-sm"
           type="text"
-          id="address"
-          placeholder="1322 main st, anytown"
-          {...register("address")}
+          id="cvv"
+          placeholder="132"
+          {...register("cvv")}
         />
-        {errors.address && (
-          <p className="text-xs text-red-500">{errors.address.message}</p>
+        {errors.cvv && (
+          <p className="text-xs text-red-500">{errors.cvv.message}</p>
         )}
       </div>
-      {/* 5* field */}
-      <div className="flex flex-col gap-1">
-        <label htmlFor="name" className="text-xs text-gray-500 font-medium">
-          City
-        </label>
-        <input
-          className="border-b border-gray-200 py-2 outline-none text-sm"
-          type="text"
-          id="city"
-          placeholder="AnyCity"
-          {...register("city")}
+      <div className="flex items-center gap-2 mt-4">
+        <Image
+          src="/klarna.png"
+          alt="klarna"
+          width={50}
+          height={25}
+          className="rounded-md"
         />
-        {errors.city && (
-          <p className="text-xs text-red-500">{errors.city.message}</p>
-        )}
+        <Image
+          src="/cards.png"
+          alt="cards"
+          width={50}
+          height={25}
+          className="rounded-md"
+        />
+        <Image
+          src="/stripe.png"
+          alt="stripe"
+          width={50}
+          height={25}
+          className="rounded-md"
+        />
       </div>
+
       <button
         type="submit"
         className="w-full bg-gray-800 hover:bg-gray-900 text-white p-2 rounded-lg cursor-pointer flex items-center justify-center gap-2   trasition-all duration-300"
       >
-        Continue
-        <ArrowUpRight className="w-3 h-3" />
+        Checkout
+        <ShoppingCart className="w-3 h-3" />
       </button>
     </form>
   );
